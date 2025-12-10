@@ -26,65 +26,6 @@ Demonstrar uma arquitetura **production-grade** de microserviços na AWS com:
 
 ---
 
-## 🏗️ Arquitetura
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                      AWS CLOUD (us-east-1)                      │
-│                                                                 │
-│  ┌──────────────────────────────────────────────────────────┐  │
-│  │  VPC (10.0.0.0/22)                                        │  │
-│  │                                                           │  │
-│  │  ┌──────────────┐        ┌──────────────┐                │  │
-│  │  │ Public 1a    │        │ Public 1b    │                │  │
-│  │  │ 10.0.0.0/26  │        │ 10.0.0.64/26 │                │  │
-│  │  │ NAT Gateway  │        │ NAT Gateway  │                │  │
-│  │  └──────┬───────┘        └───────┬──────┘                │  │
-│  │         │                        │                        │  │
-│  │  ┌──────┴────────────────────────┴──────┐                │  │
-│  │  │     Internet Gateway                 │                │  │
-│  │  └──────────────────────────────────────┘                │  │
-│  │         │                        │                        │  │
-│  │  ┌──────┴───────┐        ┌───────┴──────┐                │  │
-│  │  │ Private 1a   │        │ Private 1b   │                │  │
-│  │  │ 10.0.1.0/26  │        │ 10.0.1.64/26 │                │  │
-│  │  │              │        │              │                │  │
-│  │  │ ┌──────────────────────────────────┐ │                │  │
-│  │  │ │   EKS Cluster (v1.32)            │ │                │  │
-│  │  │ │                                  │ │                │  │
-│  │  │ │   ┌─────────────────────────┐   │ │                │  │
-│  │  │ │   │ Istio Control Plane     │   │ │                │  │
-│  │  │ │   │  - istiod               │   │ │                │  │
-│  │  │ │   │  - Ingress Gateway (NLB)│   │ │                │  │
-│  │  │ │   └─────────────────────────┘   │ │                │  │
-│  │  │ │                                  │ │                │  │
-│  │  │ │   ┌─────────────────────────┐   │ │                │  │
-│  │  │ │   │ Namespace: ecommerce    │   │ │                │  │
-│  │  │ │   │  + Frontend (React)     │   │ │                │  │
-│  │  │ │   │  + Product Catalog v1   │   │ │                │  │
-│  │  │ │   │  + Product Catalog v2   │   │ │                │  │
-│  │  │ │   │  + MongoDB              │   │ │                │  │
-│  │  │ │   │                         │   │ │                │  │
-│  │  │ │   │  Canary: 80% v1 / 20% v2│   │ │                │  │
-│  │  │ │   └─────────────────────────┘   │ │                │  │
-│  │  │ │                                  │ │                │  │
-│  │  │ │   ┌─────────────────────────┐   │ │                │  │
-│  │  │ │   │ Observability Stack     │   │ │                │  │
-│  │  │ │   │  - Prometheus           │   │ │                │  │
-│  │  │ │   │  - Grafana              │   │ │                │  │
-│  │  │ │   │  - Kiali                │   │ │                │  │
-│  │  │ │   │  - Jaeger               │   │ │                │  │
-│  │  │ │   └─────────────────────────┘   │ │                │  │
-│  │  │ │                                  │ │                │  │
-│  │  │ │   3x Nodes t3.medium             │ │                │  │
-│  │  │ └──────────────────────────────────┘ │                │  │
-│  │  └──────────────────────────────────────┘                │  │
-│  └───────────────────────────────────────────────────────────┘  │
-└─────────────────────────────────────────────────────────────────┘
-```
-
----
-
 ## 📦 Componentes do Projeto
 
 ### **Terraform Stacks:**
@@ -123,7 +64,7 @@ Demonstrar uma arquitetura **production-grade** de microserviços na AWS com:
 
 ```bash
 # Clone o repositório
-git clone https://github.com/jlui70/istio-eks-terraform-complete.git
+git clone https://github.com/jlui70/lab-istio-mesh-kiali-eks-terraform
 cd istio-eks-terraform-complete
 
 # Configure perfil AWS (IMPORTANTE!)
@@ -240,12 +181,32 @@ http://localhost:16686
 
 ### **Passo 3: Validar Métricas no Prometheus**
 
-```bash
-# Abrir Prometheus
-http://localhost:9090
+Abra **http://localhost:9090** e execute as queries:
 
-# Query para ver distribuição:
-istio_requests_total{destination_service_name=~"product-catalog-v.*"}
+**Ver todas as requisições do namespace ecommerce:**
+```promql
+istio_requests_total{destination_service_namespace="ecommerce"}
+```
+
+**Ver distribuição de tráfego por versão (Canary 80/20):**
+```promql
+sum by (destination_service_name, destination_version) (
+  istio_requests_total{destination_service_namespace="ecommerce"}
+)
+```
+
+**Ver taxa de requisições (últimos 5 min):**
+```promql
+rate(istio_requests_total{destination_service_namespace="ecommerce"}[5m])
+```
+
+**Ver latência p99:**
+```promql
+histogram_quantile(0.99, 
+  sum(rate(istio_request_duration_milliseconds_bucket{
+    destination_service_namespace="ecommerce"
+  }[5m])) by (le, destination_service_name)
+)
 ```
 
 ---
@@ -271,17 +232,6 @@ Para evitar custos AWS contínuos:
 
 ---
 
-## 📚 Documentação Adicional
-
-- **[TROUBLESHOOTING.md](./TROUBLESHOOTING.md)** - Soluções para 10 problemas comuns
-- **[QUICK-START.md](./QUICK-START.md)** - Referência rápida de comandos
-- **[DEMO-CANARY.md](./DEMO-CANARY.md)** - Guia completo de demonstração Canary
-- **[OBSERVABILITY.md](./OBSERVABILITY.md)** - Dashboards e métricas
-- **[PROJECT-STATUS.md](./PROJECT-STATUS.md)** - Histórico do projeto
-- **[PRE-COMMIT-CHECKLIST.md](./PRE-COMMIT-CHECKLIST.md)** - Checklist para contribuidores
-
----
-
 ## 🔧 Troubleshooting
 
 ### **Erro: "Kubernetes cluster unreachable"**
@@ -294,11 +244,6 @@ export AWS_PROFILE=devopsproject  # Perfil que assume terraform-role
 aws eks update-kubeconfig --region us-east-1 --name eks-devopsproject-cluster
 kubectl get nodes
 ```
-
-Veja mais soluções em [TROUBLESHOOTING.md](./TROUBLESHOOTING.md).
-
----
-
 ## 🤝 Contribuindo
 
 Contribuições são bem-vindas! Por favor:
