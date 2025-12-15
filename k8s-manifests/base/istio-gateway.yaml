@@ -28,7 +28,7 @@ spec:
         prefix: /
     route:
     - destination:
-        host: ecommerce-ui
+        host: ecommerce-ui.ecommerce-staging.svc.cluster.local
         port:
           number: 80
 ---
@@ -37,7 +37,7 @@ kind: DestinationRule
 metadata:
   name: ecommerce-ui
 spec:
-  host: ecommerce-ui
+  host: ecommerce-ui.ecommerce-staging.svc.cluster.local
   trafficPolicy:
     loadBalancer:
       simple: ROUND_ROBIN
