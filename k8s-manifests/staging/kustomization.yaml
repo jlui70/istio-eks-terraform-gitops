@@ -3,9 +3,6 @@ kind: Kustomization
 
 namespace: ecommerce-staging
 
-resources:
-  - ../base/namespace-staging.yaml
-
 bases:
   - ../base
 
