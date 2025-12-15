@@ -15,6 +15,7 @@ commonLabels:
 patchesStrategicMerge:
   - replicas-patch.yaml
   - resources-patch.yaml
+  - virtualservice-gateway-patch.yaml
 
 images:
   - name: 794038226274.dkr.ecr.us-east-1.amazonaws.com/ecommerce/ecommerce-ui
