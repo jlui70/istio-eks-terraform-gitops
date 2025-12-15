@@ -68,13 +68,23 @@ echo -e "\n${YELLOW}[1/5] 🗑️  Deletando aplicação do Kubernetes...${NC}"
 # Parar port-forwards antes
 pkill -f 'kubectl port-forward' 2>/dev/null || true
 
-# Deletar namespace
-if kubectl get namespace ecommerce &>/dev/null; then
-    kubectl delete namespace ecommerce --timeout=5m
-    echo -e "${GREEN}✅ Namespace ecommerce deletado${NC}"
+# Deletar ArgoCD namespace (GitOps)
+if kubectl get namespace argocd &>/dev/null; then
+    kubectl delete namespace argocd --timeout=5m
+    echo -e "${GREEN}✅ Namespace argocd deletado${NC}"
 else
-    echo -e "${BLUE}ℹ️  Namespace ecommerce já não existe${NC}"
+    echo -e "${BLUE}ℹ️  Namespace argocd já não existe${NC}"
 fi
+
+# Deletar namespaces da aplicação
+for ns in ecommerce ecommerce-staging ecommerce-production; do
+    if kubectl get namespace $ns &>/dev/null; then
+        kubectl delete namespace $ns --timeout=5m
+        echo -e "${GREEN}✅ Namespace $ns deletado${NC}"
+    else
+        echo -e "${BLUE}ℹ️  Namespace $ns já não existe${NC}"
+    fi
+done
 
 # ============================================================================
 # Step 2: Deletar Istio
