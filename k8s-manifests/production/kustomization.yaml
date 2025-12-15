@@ -1,0 +1,35 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: ecommerce-production
+
+resources:
+  - ../base/namespace-production.yaml
+
+bases:
+  - ../base
+
+nameSuffix: -prod
+
+commonLabels:
+  environment: production
+
+# Patches para produção
+patchesStrategicMerge:
+  - hpa-patch.yaml
+
+images:
+  - name: 794038226274.dkr.ecr.us-east-1.amazonaws.com/ecommerce/ecommerce-ui
+    newTag: prod-v1.0.0
+  - name: 794038226274.dkr.ecr.us-east-1.amazonaws.com/ecommerce/product-catalog
+    newTag: prod-v1.0.0
+  - name: 794038226274.dkr.ecr.us-east-1.amazonaws.com/ecommerce/order-management
+    newTag: prod-v1.0.0
+  - name: 794038226274.dkr.ecr.us-east-1.amazonaws.com/ecommerce/product-inventory
+    newTag: prod-v1.0.0
+  - name: 794038226274.dkr.ecr.us-east-1.amazonaws.com/ecommerce/profile-management
+    newTag: prod-v1.0.0
+  - name: 794038226274.dkr.ecr.us-east-1.amazonaws.com/ecommerce/shipping-handling
+    newTag: prod-v1.0.0
+  - name: 794038226274.dkr.ecr.us-east-1.amazonaws.com/ecommerce/contact-support
+    newTag: prod-v1.0.0

@@ -1,0 +1,36 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: ecommerce-staging
+
+resources:
+  - ../base/namespace-staging.yaml
+
+bases:
+  - ../base
+
+nameSuffix: -staging
+
+commonLabels:
+  environment: staging
+
+# Patches para staging
+patchesStrategicMerge:
+  - replicas-patch.yaml
+  - resources-patch.yaml
+
+images:
+  - name: 794038226274.dkr.ecr.us-east-1.amazonaws.com/ecommerce/ecommerce-ui
+    newTag: staging-latest
+  - name: 794038226274.dkr.ecr.us-east-1.amazonaws.com/ecommerce/product-catalog
+    newTag: staging-latest
+  - name: 794038226274.dkr.ecr.us-east-1.amazonaws.com/ecommerce/order-management
+    newTag: staging-latest
+  - name: 794038226274.dkr.ecr.us-east-1.amazonaws.com/ecommerce/product-inventory
+    newTag: staging-latest
+  - name: 794038226274.dkr.ecr.us-east-1.amazonaws.com/ecommerce/profile-management
+    newTag: staging-latest
+  - name: 794038226274.dkr.ecr.us-east-1.amazonaws.com/ecommerce/shipping-handling
+    newTag: staging-latest
+  - name: 794038226274.dkr.ecr.us-east-1.amazonaws.com/ecommerce/contact-support
+    newTag: staging-latest

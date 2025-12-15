@@ -1,0 +1,77 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ecommerce-staging-temp
+  labels:
+    istio-injection: enabled
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ecommerce-ui
+  namespace: ecommerce-staging-temp
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ecommerce-ui
+  template:
+    metadata:
+      labels:
+        app: ecommerce-ui
+        version: v1
+    spec:
+      containers:
+      - name: ecommerce-ui
+        image: nginx:alpine
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ecommerce-ui
+  namespace: ecommerce-staging-temp
+spec:
+  selector:
+    app: ecommerce-ui
+  ports:
+  - port: 80
+    targetPort: 80
+    name: http
+---
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: ecommerce-gateway
+  namespace: ecommerce-staging-temp
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "*"
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: ecommerce-ui
+  namespace: ecommerce-staging-temp
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - ecommerce-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: ecommerce-ui
+        port:
+          number: 80

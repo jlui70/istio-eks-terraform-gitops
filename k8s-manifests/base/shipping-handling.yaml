@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shipping-and-handling
+  labels:
+    app: shipping-and-handling
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: shipping-and-handling
+  template:
+    metadata:
+      labels:
+        app: shipping-and-handling
+        version: v1
+    spec:
+      containers:
+      - name: shipping-and-handling
+        image: 794038226274.dkr.ecr.us-east-1.amazonaws.com/ecommerce/shipping-handling:latest
+        ports:
+        - containerPort: 3005
+          name: http
+        env:
+        - name: NODE_ENV
+          value: "production"
+        - name: PORT
+          value: "3005"
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 3005
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 3005
+          initialDelaySeconds: 5
+          periodSeconds: 5
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: shipping-and-handling
+  labels:
+    app: shipping-and-handling
+spec:
+  ports:
+  - port: 3005
+    targetPort: 3005
+    name: http
+  selector:
+    app: shipping-and-handling

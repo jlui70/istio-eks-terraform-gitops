@@ -60,6 +60,23 @@ istioctl x precheck
 echo -e "\n${YELLOW}🔧 Instalando Istio com profile 'default'...${NC}"
 istioctl install --set profile=default --set values.defaultRevision=default -y
 
+# Instalar addons de observabilidade
+echo -e "\n${YELLOW}📊 Instalando addons de observabilidade...${NC}"
+kubectl apply -f $ISTIO_DIR/samples/addons/prometheus.yaml
+kubectl apply -f $ISTIO_DIR/samples/addons/grafana.yaml
+kubectl apply -f $ISTIO_DIR/samples/addons/kiali.yaml
+kubectl apply -f $ISTIO_DIR/samples/addons/jaeger.yaml
+
+echo -e "\n${YELLOW}⏳ Aguardando addons ficarem prontos...${NC}"
+kubectl wait --for=condition=available --timeout=300s \
+  deployment/prometheus -n istio-system 2>/dev/null || true
+kubectl wait --for=condition=available --timeout=300s \
+  deployment/grafana -n istio-system 2>/dev/null || true
+kubectl wait --for=condition=available --timeout=300s \
+  deployment/kiali -n istio-system 2>/dev/null || true
+kubectl wait --for=condition=available --timeout=300s \
+  deployment/jaeger -n istio-system 2>/dev/null || true
+
 # Verificar instalação
 echo -e "\n${YELLOW}✅ Verificando instalação...${NC}"
 kubectl get pods -n istio-system
