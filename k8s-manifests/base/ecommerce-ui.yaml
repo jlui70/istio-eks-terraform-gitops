@@ -17,13 +17,13 @@ spec:
     spec:
       containers:
       - name: ecommerce-ui
-        image: 794038226274.dkr.ecr.us-east-1.amazonaws.com/ecommerce/ecommerce-ui:latest
+        image: 794038226274.dkr.ecr.us-east-1.amazonaws.com/ecommerce/ecommerce-ui:v2.0.0
         ports:
         - containerPort: 80
           name: http
         env:
         - name: APP_VERSION
-          value: "v1.0.0"
+          value: "v2.0.0"
         - name: ENVIRONMENT
           value: "production"
         resources:
