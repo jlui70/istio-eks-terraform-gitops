@@ -19,16 +19,16 @@ patchesStrategicMerge:
 
 images:
   - name: 794038226274.dkr.ecr.us-east-1.amazonaws.com/ecommerce/ecommerce-ui
-    newTag: v2.0.0
+    newTag: v1.0.0
   - name: 794038226274.dkr.ecr.us-east-1.amazonaws.com/ecommerce/product-catalog
-    newTag: staging-latest
+    newTag: v1.0.0
   - name: 794038226274.dkr.ecr.us-east-1.amazonaws.com/ecommerce/order-management
-    newTag: staging-latest
+    newTag: v1.0.0
   - name: 794038226274.dkr.ecr.us-east-1.amazonaws.com/ecommerce/product-inventory
-    newTag: staging-latest
+    newTag: v1.0.0
   - name: 794038226274.dkr.ecr.us-east-1.amazonaws.com/ecommerce/profile-management
-    newTag: staging-latest
+    newTag: v1.0.0
   - name: 794038226274.dkr.ecr.us-east-1.amazonaws.com/ecommerce/shipping-handling
-    newTag: staging-latest
+    newTag: v1.0.0
   - name: 794038226274.dkr.ecr.us-east-1.amazonaws.com/ecommerce/contact-support
-    newTag: staging-latest
+    newTag: v1.0.0

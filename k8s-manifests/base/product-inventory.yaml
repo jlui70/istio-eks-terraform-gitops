@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: product-inventory
-        image: 794038226274.dkr.ecr.us-east-1.amazonaws.com/ecommerce/product-inventory:latest
+        image: 794038226274.dkr.ecr.us-east-1.amazonaws.com/ecommerce/product-inventory:v1.0.0
         ports:
         - containerPort: 3003
           name: http

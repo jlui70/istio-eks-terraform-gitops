@@ -30,7 +30,7 @@ spec:
     - destination:
         host: ecommerce-ui-staging.ecommerce-staging.svc.cluster.local
         port:
-          number: 80
+          number: 4000
 ---
 apiVersion: networking.istio.io/v1beta1
 kind: DestinationRule

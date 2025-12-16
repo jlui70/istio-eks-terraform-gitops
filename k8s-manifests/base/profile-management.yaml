@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: profile-management
-        image: 794038226274.dkr.ecr.us-east-1.amazonaws.com/ecommerce/profile-management:latest
+        image: 794038226274.dkr.ecr.us-east-1.amazonaws.com/ecommerce/profile-management:v1.0.0
         ports:
         - containerPort: 3004
           name: http

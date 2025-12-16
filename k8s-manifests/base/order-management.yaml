@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: order-management
-        image: 794038226274.dkr.ecr.us-east-1.amazonaws.com/ecommerce/order-management:latest
+        image: 794038226274.dkr.ecr.us-east-1.amazonaws.com/ecommerce/order-management:v1.0.0
         ports:
         - containerPort: 3002
           name: http
