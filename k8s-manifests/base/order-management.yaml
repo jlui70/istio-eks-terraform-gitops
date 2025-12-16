@@ -26,8 +26,12 @@ spec:
           value: "production"
         - name: PORT
           value: "9090"
-        - name: INVENTORY_SERVICE_URL
-          value: "http://product-inventory-staging:3002"
+        - name: PRODUCT_INVENTORY_API_HOST
+          value: "http://product-inventory-staging"
+        - name: PRODUCT_CATALOG_API_HOST
+          value: "http://product-catalog-staging"
+        - name: SHIPPING_HANDLING_API_HOST
+          value: "http://shipping-and-handling-staging"
         resources:
           requests:
             memory: "128Mi"
