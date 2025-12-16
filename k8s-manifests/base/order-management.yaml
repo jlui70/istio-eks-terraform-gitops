@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: order-management
-        image: 794038226274.dkr.ecr.us-east-1.amazonaws.com/ecommerce/order-management:v1.0.0
+        image: rslim087/order-management:1.0.0
         ports:
         - containerPort: 9090
           name: http
@@ -27,11 +27,11 @@ spec:
         - name: PORT
           value: "9090"
         - name: PRODUCT_INVENTORY_API_HOST
-          value: "http://product-inventory-staging"
+          value: "http://product-inventory"
         - name: PRODUCT_CATALOG_API_HOST
-          value: "http://product-catalog-staging"
+          value: "http://product-catalog"
         - name: SHIPPING_HANDLING_API_HOST
-          value: "http://shipping-and-handling-staging"
+          value: "http://shipping-and-handling"
         resources:
           requests:
             memory: "128Mi"
