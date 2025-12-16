@@ -26,6 +26,8 @@ spec:
           value: "production"
         - name: PORT
           value: "9090"
+        - name: INVENTORY_SERVICE_URL
+          value: "http://product-inventory-staging:3002"
         resources:
           requests:
             memory: "128Mi"

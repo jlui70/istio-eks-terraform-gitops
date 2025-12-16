@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: shipping-and-handling
-        image: 794038226274.dkr.ecr.us-east-1.amazonaws.com/ecommerce/shipping-handling:v1.0.0
+        image: rslim087/shipping-and-handling:latest
         ports:
         - containerPort: 8080
           name: http
