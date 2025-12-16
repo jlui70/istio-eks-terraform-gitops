@@ -28,16 +28,16 @@ spec:
         prefix: /
     route:
     - destination:
-        host: ecommerce-ui-staging.ecommerce-staging.svc.cluster.local
+        host: ecommerce-ui
         port:
-          number: 80
+          number: 4000
 ---
 apiVersion: networking.istio.io/v1beta1
 kind: DestinationRule
 metadata:
   name: ecommerce-ui
 spec:
-  host: ecommerce-ui-staging.ecommerce-staging.svc.cluster.local
+  host: ecommerce-ui
   trafficPolicy:
     loadBalancer:
       simple: ROUND_ROBIN
