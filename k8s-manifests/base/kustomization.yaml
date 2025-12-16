@@ -7,8 +7,8 @@ resources:
   - order-management.yaml
   - product-inventory.yaml
   - profile-management.yaml
-  - shipping-handling.yaml
-  - contact-support.yaml
+  - shipping-and-handling.yaml
+  - team-contact-support.yaml
   - istio-gateway.yaml
 
 commonLabels:

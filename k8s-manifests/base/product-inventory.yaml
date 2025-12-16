@@ -2,13 +2,12 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: product-inventory
-  labels:
-    app: product-inventory
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: product-inventory
+      version: v1
   template:
     metadata:
       labels:
@@ -17,45 +16,17 @@ spec:
     spec:
       containers:
       - name: product-inventory
-        image: 794038226274.dkr.ecr.us-east-1.amazonaws.com/ecommerce/product-inventory:latest
+        image: rslim087/product-inventory:1.0.0
         ports:
-        - containerPort: 3003
-          name: http
-        env:
-        - name: NODE_ENV
-          value: "production"
-        - name: PORT
-          value: "3003"
-        resources:
-          requests:
-            memory: "128Mi"
-            cpu: "100m"
-          limits:
-            memory: "256Mi"
-            cpu: "200m"
-        livenessProbe:
-          httpGet:
-            path: /health
-            port: 3003
-          initialDelaySeconds: 30
-          periodSeconds: 10
-        readinessProbe:
-          httpGet:
-            path: /health
-            port: 3003
-          initialDelaySeconds: 5
-          periodSeconds: 5
+        - containerPort: 3002
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: product-inventory
-  labels:
-    app: product-inventory
 spec:
   ports:
-  - port: 3003
-    targetPort: 3003
+  - port: 3002
     name: http
   selector:
     app: product-inventory
