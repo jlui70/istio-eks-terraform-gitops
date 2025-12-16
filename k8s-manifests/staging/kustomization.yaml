@@ -30,5 +30,5 @@ images:
     newTag: v1.0.0
   - name: 794038226274.dkr.ecr.us-east-1.amazonaws.com/ecommerce/shipping-handling
     newTag: v1.0.0
-  - name: 794038226274.dkr.ecr.us-east-1.amazonaws.com/ecommerce/contact-support
+  - name: 794038226274.dkr.ecr.us-east-1.amazonaws.com/ecommerce/contact-support-team
     newTag: v1.0.0
