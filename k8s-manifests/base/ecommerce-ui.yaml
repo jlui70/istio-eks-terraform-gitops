@@ -23,17 +23,17 @@ spec:
           name: http
         env:
         - name: REACT_APP_PROFILE_API_HOST
-          value: "http://profile-management"
+          value: "http://profile-management-staging:3004"
         - name: REACT_APP_PRODUCT_API_HOST
-          value: "http://product-catalog"
+          value: "http://product-catalog-staging:3001"
         - name: REACT_APP_INVENTORY_API_HOST
-          value: "http://product-inventory"
+          value: "http://product-inventory-staging:3003"
         - name: REACT_APP_ORDER_API_HOST
-          value: "http://order-management"
+          value: "http://order-management-staging:3002"
         - name: REACT_APP_SHIPPING_API_HOST
-          value: "http://shipping-and-handling"
+          value: "http://shipping-and-handling-staging:3005"
         - name: REACT_APP_CONTACT_API_HOST
-          value: "http://contact-support-team"
+          value: "http://contact-support-team-staging:3006"
         resources:
           requests:
             memory: "64Mi"
