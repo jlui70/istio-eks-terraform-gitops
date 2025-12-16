@@ -19,13 +19,13 @@ spec:
       - name: contact-support
         image: 794038226274.dkr.ecr.us-east-1.amazonaws.com/ecommerce/contact-support:v1.0.0
         ports:
-        - containerPort: 3006
+        - containerPort: 8000
           name: http
         env:
         - name: NODE_ENV
           value: "production"
         - name: PORT
-          value: "3006"
+          value: "8000"
         resources:
           requests:
             memory: "128Mi"
@@ -36,13 +36,13 @@ spec:
         livenessProbe:
           httpGet:
             path: /health
-            port: 3006
+            port: 8000
           initialDelaySeconds: 30
           periodSeconds: 10
         readinessProbe:
           httpGet:
             path: /health
-            port: 3006
+            port: 8000
           initialDelaySeconds: 5
           periodSeconds: 5
 ---
@@ -54,7 +54,7 @@ metadata:
     app: contact-support-team
 spec:
   ports:
-  - port: 3006
+  - port: 8000
     targetPort: 3006
     name: http
   selector:

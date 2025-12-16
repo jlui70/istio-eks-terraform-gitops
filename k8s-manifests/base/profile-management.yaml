@@ -19,13 +19,13 @@ spec:
       - name: profile-management
         image: 794038226274.dkr.ecr.us-east-1.amazonaws.com/ecommerce/profile-management:v1.0.0
         ports:
-        - containerPort: 3004
+        - containerPort: 3003
           name: http
         env:
         - name: NODE_ENV
           value: "production"
         - name: PORT
-          value: "3004"
+          value: "3003"
         resources:
           requests:
             memory: "128Mi"
@@ -36,13 +36,13 @@ spec:
         livenessProbe:
           httpGet:
             path: /health
-            port: 3004
+            port: 3003
           initialDelaySeconds: 30
           periodSeconds: 10
         readinessProbe:
           httpGet:
             path: /health
-            port: 3004
+            port: 3003
           initialDelaySeconds: 5
           periodSeconds: 5
 ---
@@ -54,7 +54,7 @@ metadata:
     app: profile-management
 spec:
   ports:
-  - port: 3004
+  - port: 3003
     targetPort: 3004
     name: http
   selector:

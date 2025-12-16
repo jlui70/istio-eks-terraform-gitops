@@ -19,13 +19,13 @@ spec:
       - name: order-management
         image: 794038226274.dkr.ecr.us-east-1.amazonaws.com/ecommerce/order-management:v1.0.0
         ports:
-        - containerPort: 3002
+        - containerPort: 9090
           name: http
         env:
         - name: NODE_ENV
           value: "production"
         - name: PORT
-          value: "3002"
+          value: "9090"
         resources:
           requests:
             memory: "128Mi"
@@ -36,13 +36,13 @@ spec:
         livenessProbe:
           httpGet:
             path: /health
-            port: 3002
+            port: 9090
           initialDelaySeconds: 30
           periodSeconds: 10
         readinessProbe:
           httpGet:
             path: /health
-            port: 3002
+            port: 9090
           initialDelaySeconds: 5
           periodSeconds: 5
 ---
@@ -54,7 +54,7 @@ metadata:
     app: order-management
 spec:
   ports:
-  - port: 3002
+  - port: 9090
     targetPort: 3002
     name: http
   selector:
