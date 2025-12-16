@@ -55,7 +55,7 @@ metadata:
 spec:
   ports:
   - port: 9090
-    targetPort: 3002
+    targetPort: 9090
     name: http
   selector:
     app: order-management

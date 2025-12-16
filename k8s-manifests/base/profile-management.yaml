@@ -55,7 +55,7 @@ metadata:
 spec:
   ports:
   - port: 3003
-    targetPort: 3004
+    targetPort: 3003
     name: http
   selector:
     app: profile-management

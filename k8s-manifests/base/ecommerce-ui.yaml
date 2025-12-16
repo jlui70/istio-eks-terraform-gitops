@@ -23,29 +23,17 @@ spec:
           name: http
         env:
         - name: REACT_APP_PROFILE_API_HOST
-          value: "profile-management-staging"
-        - name: REACT_APP_PROFILE_API_PORT
-          value: "3003"
+          value: "http://profile-management-staging"
         - name: REACT_APP_PRODUCT_API_HOST
-          value: "product-catalog-staging"
-        - name: REACT_APP_PRODUCT_API_PORT
-          value: "3001"
+          value: "http://product-catalog-staging"
         - name: REACT_APP_INVENTORY_API_HOST
-          value: "product-inventory-staging"
-        - name: REACT_APP_INVENTORY_API_PORT
-          value: "3002"
+          value: "http://product-inventory-staging"
         - name: REACT_APP_ORDER_API_HOST
-          value: "order-management-staging"
-        - name: REACT_APP_ORDER_API_PORT
-          value: "9090"
+          value: "http://order-management-staging"
         - name: REACT_APP_SHIPPING_API_HOST
-          value: "shipping-and-handling-staging"
-        - name: REACT_APP_SHIPPING_API_PORT
-          value: "8080"
+          value: "http://shipping-and-handling-staging"
         - name: REACT_APP_CONTACT_API_HOST
-          value: "contact-support-team-staging"
-        - name: REACT_APP_CONTACT_API_PORT
-          value: "8000"
+          value: "http://contact-support-team-staging"
         resources:
           requests:
             memory: "64Mi"

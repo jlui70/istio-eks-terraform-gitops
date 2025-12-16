@@ -55,7 +55,7 @@ metadata:
 spec:
   ports:
   - port: 8080
-    targetPort: 3005
+    targetPort: 8080
     name: http
   selector:
     app: shipping-and-handling

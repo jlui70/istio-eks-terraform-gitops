@@ -55,7 +55,7 @@ metadata:
 spec:
   ports:
   - port: 8000
-    targetPort: 3006
+    targetPort: 8000
     name: http
   selector:
     app: contact-support-team
