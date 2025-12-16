@@ -4,13 +4,13 @@ metadata:
   name: ecommerce-ui
 spec:
   gateways:
-  - ecommerce-gateway-staging
+  - ecommerce-gateway
   http:
   - match:
     - uri:
         prefix: /
     route:
     - destination:
-        host: ecommerce-ui-staging
+        host: ecommerce-ui
         port:
           number: 4000

@@ -6,8 +6,6 @@ namespace: ecommerce-staging
 bases:
   - ../base
 
-nameSuffix: -staging
-
 commonLabels:
   environment: staging
 
